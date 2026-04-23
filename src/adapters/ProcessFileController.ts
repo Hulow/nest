@@ -23,7 +23,7 @@ export class ProcessFileController {
     },
   })
 
-  upload(@UploadedFile() file: Express.Multer.File): string {
+  upload(@UploadedFile() file: Express.Multer.File): Promise<void> {
     return this.handler.process(
       Command.from(
         file.fieldname,

@@ -3,7 +3,7 @@ export class Command {
     private fileName: string;
     private encodingType: string;
     private mimetype: string;
-    private file: Buffer;
+    private content: Buffer;
     private size: number;
 
     private constructor(
@@ -18,7 +18,7 @@ export class Command {
         this.fileName = fileName;
         this.encodingType = encodingType;
         this.mimetype = mimetype;
-        this.file = file;
+        this.content = file;
         this.size = size
     }
 
@@ -27,7 +27,7 @@ export class Command {
         fileName: string,
         encodingType: string,
         mimetype: string,
-        file: Buffer,
+        content: Buffer,
         size: number
     ) : Command {
         return new Command(
@@ -35,12 +35,20 @@ export class Command {
             fileName,
             encodingType,
             mimetype,
-            file,
+            content,
             size
         )
     }
 
     getFileName(): string {
         return this.fileName
+    }
+
+    getContent(): Buffer {
+        return this.content
+    }
+
+    getEncodingType(): string {
+        return this.encodingType;
     }
 }
