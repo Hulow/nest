@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ProcessFileController } from './adapters/ProcessFileController';
+import { ProcessFileController } from './infra/ProcessFileController';
 import { CommandHandler, DOCUMENT_LOADER } from './application/CommandHandler';
 import { DocumentLoader } from './infra/DocumentLoader';
 
