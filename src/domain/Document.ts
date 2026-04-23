@@ -8,4 +8,8 @@ export class Document {
     static from(content: string): Document {
         return new Document(content)
     }
+
+    getContent(): string {
+        return this.content
+    }
 }

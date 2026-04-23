@@ -1,16 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { Command } from './Command';
-import { DocumentLoader } from '../infra/DocumentLoader';
-
-export const DOCUMENT_LOADER = Symbol('DOCUMENT_LOADER');
-
+import { DOCUMENT_LOADER, DocumentLoader } from '../infra/DocumentLoader';
+import { TEXT_SPLITTER, TextSplitter } from '../infra/TextSplitter';
 
 @Injectable()
 export class CommandHandler {
   constructor(
     @Inject(DOCUMENT_LOADER)
-    private documentLoader: DocumentLoader
+    private documentLoader: DocumentLoader,
+    @Inject(TEXT_SPLITTER) 
+    private textSplitter: TextSplitter,
   ) {}
   async process(command: Command): Promise<void> {
 
@@ -22,6 +22,8 @@ export class CommandHandler {
     if(docs.length === 0) {
       throw new Error('EmptyDocumentError')
     }
+
+    docs.map(async (doc) => await this.textSplitter.process(doc))
 
     return;
   }

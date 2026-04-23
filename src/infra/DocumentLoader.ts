@@ -2,6 +2,8 @@ import { Document } from "../domain/Document";
 import { IDocumentLoader } from "src/domain/IDocumentLoader";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf"
 
+export const DOCUMENT_LOADER = Symbol('DOCUMENT_LOADER');
+
 export class DocumentLoader implements IDocumentLoader {
     public async load(content: Buffer, type: string): Promise<Document[]> {
         const blob = new Blob(

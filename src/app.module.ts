@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ProcessFileController } from './infra/ProcessFileController';
-import { CommandHandler, DOCUMENT_LOADER } from './application/CommandHandler';
+import { CommandHandler } from './application/CommandHandler';
+import { DOCUMENT_LOADER } from './infra/DocumentLoader';
 import { DocumentLoader } from './infra/DocumentLoader';
+import { TEXT_SPLITTER, TextSplitter } from './infra/TextSplitter';
 
 @Module({
   imports: [],
@@ -11,7 +13,11 @@ import { DocumentLoader } from './infra/DocumentLoader';
     {
       provide: DOCUMENT_LOADER,
       useClass: DocumentLoader,
-  },
+    },
+    {
+      provide: TEXT_SPLITTER,
+      useClass: TextSplitter
+    }
   ],
 })
 
