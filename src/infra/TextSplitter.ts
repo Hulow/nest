@@ -6,10 +6,11 @@ export const TEXT_SPLITTER = Symbol('TEXT_SPLITTER');
 
 export class TextSplitter implements ITextSplitter {
 
-    async process(document: Document): Promise<void> {
+    async process(document: Document): Promise<string[]> {
         const splitter = new RecursiveCharacterTextSplitter({ chunkSize: 100, chunkOverlap: 0 })
         const text = await splitter.splitText(document.getContent())
-        console.log(text);
+        
+        return text;
     }
 
 }

@@ -4,6 +4,7 @@ import { CommandHandler } from './application/CommandHandler';
 import { DOCUMENT_LOADER } from './infra/DocumentLoader';
 import { DocumentLoader } from './infra/DocumentLoader';
 import { TEXT_SPLITTER, TextSplitter } from './infra/TextSplitter';
+import { DOCUMENT_EMBEDDER, DocumentEmbedder } from './infra/DocumentEmbedder';
 
 @Module({
   imports: [],
@@ -17,6 +18,10 @@ import { TEXT_SPLITTER, TextSplitter } from './infra/TextSplitter';
     {
       provide: TEXT_SPLITTER,
       useClass: TextSplitter
+    },
+    {
+      provide: DOCUMENT_EMBEDDER,
+      useClass: DocumentEmbedder
     }
   ],
 })

@@ -3,11 +3,13 @@ import { CommandHandler } from "./CommandHandler"
 import { DocumentLoaderStub } from "../infra/DocumentLoaderStub"
 import { Command } from "./Command"
 import { TextSplitterStub } from "../infra/TextSplitterStub"
+import { DocumentEmbedderStub } from "../infra/DocumentEmbedderStub"
 
 describe('Given a Command to handle', () => {
     let handler: CommandHandler
     let documentLoader: DocumentLoaderStub
     let textSplitter: TextSplitterStub
+    let textEmbedder: DocumentEmbedderStub
 
     const VALID_COMMAND = {
         type: 'type',
@@ -21,10 +23,15 @@ describe('Given a Command to handle', () => {
     const startDepandenciesToInject = () => {
         documentLoader = new DocumentLoaderStub()
         textSplitter = new TextSplitterStub()
+        textEmbedder = new DocumentEmbedderStub()
     }
 
     const startHandler = () => {
-        handler = new CommandHandler(documentLoader, textSplitter)
+        handler = new CommandHandler(
+            documentLoader, 
+            textSplitter, 
+            textEmbedder
+        )
     }
 
     beforeAll(() => {
