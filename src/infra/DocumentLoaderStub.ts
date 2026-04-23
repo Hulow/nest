@@ -1,4 +1,4 @@
-import { IDocumentLoader } from "../domain/DocumentLoader";
+import { IDocumentLoader } from "../domain/IDocumentLoader";
 import { Document } from "../domain/Document"
 
 

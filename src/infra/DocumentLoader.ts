@@ -1,5 +1,5 @@
 import { Document } from "../domain/Document";
-import { IDocumentLoader } from "src/domain/DocumentLoader";
+import { IDocumentLoader } from "src/domain/IDocumentLoader";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf"
 
 export class DocumentLoader implements IDocumentLoader {
