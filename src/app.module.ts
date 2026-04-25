@@ -5,9 +5,18 @@ import { DOCUMENT_LOADER } from './infra/DocumentLoader';
 import { DocumentLoader } from './infra/DocumentLoader';
 import { TEXT_SPLITTER, TextSplitter } from './infra/TextSplitter';
 import { DOCUMENT_EMBEDDER, DocumentEmbedder } from './infra/DocumentEmbedder';
+import { LoggerModule } from 'pino-nestjs';
 
 @Module({
-  imports: [],
+  imports: [
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport: {
+          target: 'pino-pretty',
+        },
+      },
+    }),
+  ],
   controllers: [ProcessFileController],
   providers: [
     CommandHandler,
