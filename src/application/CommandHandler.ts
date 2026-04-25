@@ -27,7 +27,9 @@ export class CommandHandler {
       throw new Error('EmptyDocumentError')
     }
 
-    docs.map(async (doc) => await this.processDocument(doc));
+    await Promise.all(
+      docs.map(doc => this.processDocument(doc))
+    )
 
     return;
   }
