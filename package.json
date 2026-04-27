@@ -28,6 +28,7 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.3.2",
+    "@opensearch-project/opensearch": "^3.5.1",
     "dd-trace": "^5.98.0",
     "pdf-parse": "^1.1.4",
     "pino": "^10.3.1",

@@ -3,8 +3,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Command } from './Command';
 import { DOCUMENT_LOADER, DocumentLoader } from '../infra/DocumentLoader';
 import { TEXT_SPLITTER, TextSplitter } from '../infra/TextSplitter';
-import { DOCUMENT_EMBEDDER, DocumentEmbedder } from 'src/infra/DocumentEmbedder';
+import { DOCUMENT_EMBEDDER, DocumentEmbedder } from '../infra/DocumentEmbedder';
 import { Document } from '../domain/Document';
+import { REPORT_REPOSITORY, ReportRepository } from '../infra/ReportRepository';
 
 @Injectable()
 export class CommandHandler {
@@ -14,7 +15,9 @@ export class CommandHandler {
     @Inject(TEXT_SPLITTER) 
     private textSplitter: TextSplitter,
     @Inject(DOCUMENT_EMBEDDER)
-    private documentEmbedder: DocumentEmbedder
+    private documentEmbedder: DocumentEmbedder,
+    @Inject(REPORT_REPOSITORY)
+    private reportRepository: ReportRepository
   ) {}
   async process(command: Command): Promise<void> {
 
@@ -36,7 +39,11 @@ export class CommandHandler {
 
   private async processDocument(doc: Document): Promise<void> {
     const texts: string[] = await this.splitText(doc);
-    await this.vectorizeText(texts);
+    const vectors = await this.vectorizeText(texts);
+   
+    for (const vector of vectors) {
+       await this.storeReport(vector);
+    }
   }
 
   private async splitText(doc: Document): Promise<string[]> {
@@ -45,5 +52,9 @@ export class CommandHandler {
 
   private async vectorizeText(texts: string[]): Promise<number[][]> {
     return await this.documentEmbedder.process(texts);
+  }
+
+  private async storeReport(document: number[]): Promise<void> {
+    return await this.reportRepository.addDocument(document);
   }
 }

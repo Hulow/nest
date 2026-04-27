@@ -6,6 +6,8 @@ import { DocumentLoader } from './infra/DocumentLoader';
 import { TEXT_SPLITTER, TextSplitter } from './infra/TextSplitter';
 import { DOCUMENT_EMBEDDER, DocumentEmbedder } from './infra/DocumentEmbedder';
 import { LoggerModule } from 'pino-nestjs';
+import { OPENSEARCH_CLIENT, REPORT_REPOSITORY, ReportRepository } from './infra/ReportRepository';
+import { Client } from '@opensearch-project/opensearch';
 
 @Module({
   imports: [
@@ -31,6 +33,21 @@ import { LoggerModule } from 'pino-nestjs';
     {
       provide: DOCUMENT_EMBEDDER,
       useClass: DocumentEmbedder
+    },
+    {
+      provide: OPENSEARCH_CLIENT,
+      useFactory: () => {
+        return new Client({
+          node: 'http://localhost:9200',
+        });
+      },
+    },
+    {
+      provide: REPORT_REPOSITORY,
+      useFactory: (client: Client) => {
+        return new ReportRepository(client);
+      },
+      inject: [OPENSEARCH_CLIENT],
     }
   ],
 })
